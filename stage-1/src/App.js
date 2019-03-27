@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import StoreFront from "./Components/StoreFront/StoreFront";
 import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
@@ -11,6 +12,7 @@ class App extends Component {
       cart: [],
       showCart: false
     };
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.navigate = this.navigate.bind(this);
@@ -48,15 +50,20 @@ class App extends Component {
     }
   }
   render() {
+    console.log(this.state.cart);
     const { products, showCart } = this.state;
+    // const cart = this.state.cart;
     return (
       <div className="App">
         <NavBar navigate={this.navigate} />
         <div className="main-container">
           {showCart ? (
-            <ShoppingCart cart={cart} />
+            <ShoppingCart
+              cart={this.state.cart}
+              removeFromCart={this.removeFromCart}
+            />
           ) : (
-            <StoreFront products={products} />
+            <StoreFront products={products} addToCart={this.addToCart} />
           )}
         </div>
       </div>
